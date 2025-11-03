@@ -22,7 +22,7 @@ jobs:
         uses: appleboy/discord-action@v1.2.0
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: Reinvoiz Frontend Pipeline started for ${{ github.event_name }} event on branch ${{ github.ref }}.
+          message: Reinvoiz Landing Page Pipeline started for ${{ github.event_name }} event on branch ${{ github.ref }}.
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -54,11 +54,11 @@ jobs:
         uses: appleboy/discord-action@v1.2.0
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: "Reinvoiz Frontend Pipeline completed successfully for ${{ github.workflow }} - ${{ github.ref_name }} deployment :white_check_mark:"
+          message: "Reinvoiz Landing Page Pipeline completed successfully for ${{ github.workflow }} - ${{ github.ref_name }} deployment :white_check_mark:"
   
       - name: Notify Discord on failure
         if: failure()
         uses: appleboy/discord-action@v1.2.0
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: "Reinvoiz Frontend Pipeline failed for ${{ github.workflow }} - ${{ github.ref_name }} deployment :x:"
+          message: "Reinvoiz Landing Page Pipeline failed for ${{ github.workflow }} - ${{ github.ref_name }} deployment :x:"
