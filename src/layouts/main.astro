@@ -1,16 +1,52 @@
 ---
 import '../styles/global.css';
 const { content } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || Astro.site?.toString() || Astro.url?.origin || '';
+const canonicalUrl = `${siteUrl}${Astro.url?.pathname || ''}`;
+const title = content?.title || 'Reinvoiz';
+const description = content?.description || 'Create, send, and track invoices fast with Reinvoiz.';
+const ogImage = content?.image || '/reinvoiz.png';
+const siteName = import.meta.env.PUBLIC_SITE_NAME || 'Reinvoiz';
 ---
 
 <html lang="en">
-	<head>
+<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<title>{content.title}</title>
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:image" content={ogImage} />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+
+
+		<script type="application/ld+json" is:inline>{JSON.stringify({
+		  '@context': 'https://schema.org',
+		  '@type': 'WebSite',
+		  name: siteName,
+		  url: siteUrl,
+		  potentialAction: {
+		    '@type': 'SearchAction',
+		    target: `${siteUrl}/?q={search_term_string}`,
+		    'query-input': 'required name=search_term_string'
+		  }
+		})}</script>
 	</head>
-	<body>
+<body>
 		<slot />
-	</body>
+</body>
 </html>

@@ -24,21 +24,16 @@ jobs:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message: Reinvoiz Frontend Pipeline started for ${{ github.event_name }} event on branch ${{ github.ref }}.
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
-          bun-version: latest
+          node-version: 24
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
         
       - name: Build
-        env:
-          VITE_API_BASE_URL: "https://api.reinvoiz.com"
-          VITE_GOOGLE_CLIENT_ID: "818084075051-a4tc533c9sbhhteu0uhndonkqprplge1.apps.googleusercontent.com"
-          VITE_IPDATA_API_KEY: "3ccc7af8d7b1d171dd9c271a1e1fbd0b5959dc8ff1e369250e9ff439"
-          VITE_STRIPE_MODE: "production"
-        run: bun run build
+        run: npm run build
 
       - name: AWS Login
         uses: aws-actions/configure-aws-credentials@v4
@@ -48,11 +43,11 @@ jobs:
 
       - name: Sync to S3
         run: |
-          aws s3 sync dist/ s3://app.reinvoiz.com --delete
+          aws s3 sync dist/ s3://reinvoiz --delete
 
       - name: Invalidate CloudFront
         run: |
-          aws cloudfront create-invalidation --distribution-id E1Y6O3ZUDC7908 --paths "/*"
+          aws cloudfront create-invalidation --distribution-id EEQH58C5MIAIF --paths "/*"
 
       - name: Notify Discord on success
         if: success()
