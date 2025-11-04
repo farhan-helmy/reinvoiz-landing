@@ -214,13 +214,21 @@ import VideoPreview from "@/components/VideoPreview";
 
           <!-- Video Preview with Enhanced Styling -->
           <div class="mt-16 sm:mt-20">
-            <div class="relative mx-auto max-w-5xl">
+            <div class="relative mx-auto max-w-6xl">
               <div class="absolute -inset-4 rounded-3xl bg-white/10 blur-2xl">
               </div>
               <div
                 class="relative overflow-hidden rounded-2xl border border-white/20 bg-black/40 p-2 backdrop-blur-sm"
               >
-                <VideoPreview client:idle />
+                <iframe
+                  class="w-full h-[320px] sm:h-[420px] md:h-[540px] lg:h-[680px]"
+                  src="https://www.youtube.com/embed/7vSGIXYbQxc?si=YVOe22KdqiHBqmTV"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
               </div>
             </div>
           </div>
